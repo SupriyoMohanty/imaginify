@@ -9,7 +9,7 @@
 
 //for this we have to deploy the project so that clerk can pic our endpoint that would be explosed in public
 
-"use server";
+//https://clerk.com/docs/integrations/webhooks/sync-data
 
 import { revalidatePath } from "next/cache";
 
