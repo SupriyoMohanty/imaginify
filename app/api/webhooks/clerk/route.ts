@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+
+//so what happens in this is that as asoon as a new user logins then clerk will ping our new webpoint..using webhook that a new user created so we save all user data in env.data...extract is to an new object ans call create user that we created
 import { clerkClient } from "@clerk/nextjs/server";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
@@ -6,7 +8,6 @@ import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
-import { User } from "lucide-react";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -77,7 +78,7 @@ export async function POST(req: Request) {
     if (newUser) {
       await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
-          userId: newUser._id,
+          userId: newUser._id, //here we are saving clerk id as our own id for the user
         },
       });
     }

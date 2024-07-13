@@ -91,9 +91,10 @@ export async function updateCredits(userId: string, creditFee: number) {
     await connectToDatabase();
 
     const updatedUserCredits = await User.findOneAndUpdate(
-      { _id: userId },
-      { $inc: { creditBalance: creditFee }},
-      { new: true }
+      { _id: userId }, //find using _id
+      { $inc: { creditBalance: creditFee }}, 
+      //increment credit by inc and aplly credit fee that would be -1
+      { new: true } //to recreate user
     )
 
     if(!updatedUserCredits) throw new Error("User credits update failed");
