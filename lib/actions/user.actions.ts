@@ -50,7 +50,8 @@ export async function getUserById(userId: string) {
 export async function updateUser(clerkId: string, user: UpdateUserParams) {
   try {
     await connectToDatabase();
-
+    console.log('hi');
+    
     const updatedUser = await User.findOneAndUpdate({ clerkId }, user, {
       new: true,
     });
@@ -93,7 +94,7 @@ export async function updateCredits(userId: string, creditFee: number) {
     const updatedUserCredits = await User.findOneAndUpdate(
       { _id: userId }, //find using _id
       { $inc: { creditBalance: creditFee }}, 
-      //increment credit by inc and aplly credit fee that would be -1
+      //increment credit by inc and apply credit fee that would be -1
       { new: true } //to recreate user
     )
 

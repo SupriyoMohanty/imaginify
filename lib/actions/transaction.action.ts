@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { redirect } from 'next/navigation'
 import Stripe from "stripe";
@@ -38,15 +38,16 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams) {
   redirect(session.url!)
 }
 
-//to create transaction record in our database and contribute credits to user
 export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
+    
     // Create a new transaction with a buyerId
     const newTransaction = await Transaction.create({
-      ...transaction, buyer: transaction.buyerId
+        ...transaction, buyer: transaction.buyerId
     })
+    console.log(newTransaction);
 
     await updateCredits(transaction.buyerId, transaction.credits);
 
@@ -55,7 +56,6 @@ export async function createTransaction(transaction: CreateTransactionParams) {
     handleError(error)
   }
 }
-
 //now we create a stripe webhook ....to listen once payment done to know call createTransaction...create webhook in stripe
 
 //https://imaginify-zeta-six.vercel.app/api/webhooks/stripe....make use of the clerk one but with stripe name

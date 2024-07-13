@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 import stripe from "stripe";
 
 export async function POST(request: Request) {
-  const body = await request.text(); //we access body
+  const body = await request.text();
 
-  const sig = request.headers.get("stripe-signature") as string; //process signature for legitamacy
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!; 
+  const sig = request.headers.get("stripe-signature") as string;
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
   let event;
 
@@ -24,7 +24,6 @@ export async function POST(request: Request) {
   if (eventType === "checkout.session.completed") {
     const { id, amount_total, metadata } = event.data.object;
 
-    //form the transaction object according to our structure
     const transaction = {
       stripeId: id,
       amount: amount_total ? amount_total / 100 : 0,
